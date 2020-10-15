@@ -63,8 +63,11 @@ class _SecondCardState extends State<SecondCard> {
             child: FlatButton(
               onPressed: () => _goToAddBook(context),
               color: Colors.white,
-              child: Text('Select Next Book',
-                  style: TextStyle(color: secondaryColor, fontSize: 16, fontFamily: "Roboto"),),
+              child: Text(
+                'Select Next Book',
+                style: TextStyle(
+                    color: secondaryColor, fontSize: 16, fontFamily: "Roboto"),
+              ),
               textColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -73,14 +76,6 @@ class _SecondCardState extends State<SecondCard> {
                   bottomRight: Radius.circular(0),
                 ),
               ),
-            ),
-          );
-        } else {
-          retVal = Text(
-            "Waiting for " + _pickingUser.fullName + " to pick",
-            style: TextStyle(
-              fontSize: 30,
-              color: Colors.grey[600],
             ),
           );
         }
@@ -105,7 +100,9 @@ class _SecondCardState extends State<SecondCard> {
             Container(
               alignment: Alignment.center,
               child: Text(
-                (_nextBook != null) ? _nextBook.name : CircularProgressIndicator(),
+                (_nextBook != null)
+                    ? _nextBook.name
+                    : CircularProgressIndicator(),
                 style: TextStyle(
                   fontSize: 30,
                   color: Colors.blue,
@@ -119,7 +116,9 @@ class _SecondCardState extends State<SecondCard> {
             Container(
               alignment: Alignment.bottomRight,
               child: Text(
-                (_nextBook != null) ? "- "+ _nextBook.author : CircularProgressIndicator(),
+                (_nextBook != null)
+                    ? "- " + _nextBook.author
+                    : CircularProgressIndicator(),
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.grey[600],
@@ -139,11 +138,20 @@ class _SecondCardState extends State<SecondCard> {
 
   @override
   Widget build(BuildContext context) {
-    return ShadowContainer(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20.0),
-        child: _displayText(),
-      ),
-    );
+    return _pickingUser.uid != _currentUser.uid
+        ? _groupModel.nextBookId != "waiting"
+            ? ShadowContainer(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: _displayText(),
+                ),
+              )
+            : Container()
+        : ShadowContainer(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: _displayText(),
+            ),
+          );
   }
 }
