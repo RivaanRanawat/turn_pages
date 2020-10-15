@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:turn_pages/models/groupModel.dart';
 import 'package:turn_pages/models/userModel.dart';
 import 'package:turn_pages/root/root_file.dart';
 import 'package:turn_pages/screens/book_history_screen.dart';
+import 'package:turn_pages/screens/group_chat_screen.dart';
 import 'package:turn_pages/services/auth.dart';
 import 'package:turn_pages/services/dbFuture.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +27,16 @@ class InGroupScreenState extends State<InGroupScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+  }
+
+  void _goToGroupChat(BuildContext context) {
+    GroupModel group = Provider.of<GroupModel>(context, listen: false);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => GroupChatScreen(group.id),
+        ),
+      );
   }
 
   void _signOut(BuildContext context) async {
@@ -82,10 +95,20 @@ class InGroupScreenState extends State<InGroupScreen> {
       body: ListView(
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: IconButton(
+                  onPressed: () => _goToGroupChat(context),
+                  icon: Icon(
+                    Icons.message,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(275, 0, 0, 0),
                 child: IconButton(
                   onPressed: () => _signOut(context),
                   icon: Icon(Icons.exit_to_app),

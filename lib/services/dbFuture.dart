@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:turn_pages/models/book.dart';
 import 'package:turn_pages/models/reviewModel.dart';
 import 'package:turn_pages/models/userModel.dart';
