@@ -34,7 +34,7 @@ class InGroupScreenState extends State<InGroupScreen> {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => GroupChatScreen(group.id),
+          builder: (context) => GroupChatScreen(group.id, group.name),
         ),
       );
   }
@@ -102,7 +102,7 @@ class InGroupScreenState extends State<InGroupScreen> {
                 child: IconButton(
                   onPressed: () => _goToGroupChat(context),
                   icon: Icon(
-                    Icons.message,
+                    Icons.group,
                     color: Colors.white,
                   ),
                 ),

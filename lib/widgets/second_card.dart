@@ -24,6 +24,7 @@ class _SecondCardState extends State<SecondCard> {
     super.didChangeDependencies();
     _groupModel = Provider.of<GroupModel>(context);
     _currentUser = Provider.of<UserModel>(context);
+    
     if (_groupModel != null) {
       _pickingUser = await DBFuture()
           .getUser(_groupModel.members[_groupModel.indexPickingBook]);
@@ -130,7 +131,7 @@ class _SecondCardState extends State<SecondCard> {
         );
       }
     } else {
-      retVal = CircularProgressIndicator();
+      retVal = Text("loading..");
     }
 
     return retVal;

@@ -17,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  var _isLoading = false;
 
   void _loginUser(
       {@required LoginType type,
@@ -28,9 +29,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
       switch (type) {
         case LoginType.email:
+          setState(() {
+            _isLoading = true;
+          });
           _returnString = await Auth().loginUserWithEmail(email, password);
           break;
         case LoginType.google:
+          setState(() {
+            _isLoading = true;
+          });
           _returnString = await Auth().loginUserWithGoogle();
           break;
         default:
@@ -38,6 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (_returnString == "success") {
         print("wot");
+        setState(() {
+          _isLoading = false;
+        });
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -46,6 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
           (route) => false,
         );
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         var snackbar = new SnackBar(
           content: new Text(_returnString),
           duration: Duration(seconds: 2),
@@ -86,151 +99,160 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Container(
-        alignment: Alignment.topCenter,
-        margin: EdgeInsets.symmetric(horizontal: 30),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Login To Turn Pages and continue!',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.openSans(color: Colors.white, fontSize: 28),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Enter your email and password below to continue to Turn Pages and let the reading schedule begin!',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.openSans(color: Colors.white, fontSize: 14),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                    color: secondaryColor,
-                    border: Border.all(color: Colors.blue)),
-                child: TextFormField(
-                  controller: _emailController,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    labelText: "Email",
-                    labelStyle: TextStyle(color: Colors.white),
-                    icon: Icon(
-                      Icons.email,
-                      color: Colors.white,
-                    ),
-                    border: InputBorder.none,
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (_) => myFocusNode.requestFocus(),
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                    color: secondaryColor,
-                    border: Border.all(color: Colors.blue)),
-                child: TextFormField(
-                  focusNode: myFocusNode,
-                  controller: _passwordController,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    labelText: "Password",
-                    labelStyle: TextStyle(color: Colors.white),
-                    icon: Icon(
-                      Icons.lock,
-                      color: Colors.white,
-                    ),
-                    border: InputBorder.none,
-                  ),
-                  obscureText: true,
-                ),
-              ),
-              SizedBox(height: 30),
-              MaterialButton(
-                elevation: 0,
-                minWidth: double.maxFinite,
-                height: 50,
-                onPressed: () {
-                  _loginUser(
-                      type: LoginType.email,
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      context: context);
-                },
-                color: logoGreen,
-                child: Text('Login',
-                    style: TextStyle(color: Colors.white, fontSize: 16)),
-                textColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(0),
-                    topLeft: Radius.circular(0),
-                    bottomRight: Radius.circular(0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              MaterialButton(
-                elevation: 0,
-                minWidth: double.maxFinite,
-                height: 50,
-                onPressed: () {
-                  _loginUser(type: LoginType.google, context: context);
-                },
-                color: Colors.blue,
-                child: Row(
+      body: _isLoading == false
+          ? Container(
+              alignment: Alignment.topCenter,
+              margin: EdgeInsets.symmetric(horizontal: 30),
+              child: SingleChildScrollView(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Icon(FontAwesomeIcons.google),
-                    SizedBox(width: 10),
-                    Text('Sign In using Google',
-                        style: TextStyle(color: Colors.white, fontSize: 16)),
-                  ],
-                ),
-                textColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(0),
-                    topLeft: Radius.circular(0),
-                    bottomRight: Radius.circular(0),
-                  ),
-                ),
-              ),
-              SizedBox(height: 100),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => SignUpScreen(),
+                    Text(
+                      'Login To Turn Pages and continue!',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.openSans(
+                          color: Colors.white, fontSize: 28),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Enter your email and password below to continue to Turn Pages and let the reading schedule begin!',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.openSans(
+                          color: Colors.white, fontSize: 14),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                          color: secondaryColor,
+                          border: Border.all(color: Colors.blue)),
+                      child: TextFormField(
+                        controller: _emailController,
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                          labelText: "Email",
+                          labelStyle: TextStyle(color: Colors.white),
+                          icon: Icon(
+                            Icons.email,
+                            color: Colors.white,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) => myFocusNode.requestFocus(),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                          color: secondaryColor,
+                          border: Border.all(color: Colors.blue)),
+                      child: TextFormField(
+                        focusNode: myFocusNode,
+                        controller: _passwordController,
+                        style: TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                          labelText: "Password",
+                          labelStyle: TextStyle(color: Colors.white),
+                          icon: Icon(
+                            Icons.lock,
+                            color: Colors.white,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        obscureText: true,
+                      ),
+                    ),
+                    SizedBox(height: 30),
+                    MaterialButton(
+                      elevation: 0,
+                      minWidth: double.maxFinite,
+                      height: 50,
+                      onPressed: () {
+                        _loginUser(
+                            type: LoginType.email,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            context: context);
+                      },
+                      color: logoGreen,
+                      child: Text('Login',
+                          style: TextStyle(color: Colors.white, fontSize: 16)),
+                      textColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(0),
+                          topLeft: Radius.circular(0),
+                          bottomRight: Radius.circular(0),
                         ),
                       ),
-                      child: Text('Sign Up?',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.openSans(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold)),
                     ),
+                    SizedBox(height: 20),
+                    MaterialButton(
+                      elevation: 0,
+                      minWidth: double.maxFinite,
+                      height: 50,
+                      onPressed: () {
+                        _loginUser(type: LoginType.google, context: context);
+                      },
+                      color: Colors.blue,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(FontAwesomeIcons.google),
+                          SizedBox(width: 10),
+                          Text('Sign In using Google',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16)),
+                        ],
+                      ),
+                      textColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(0),
+                          topLeft: Radius.circular(0),
+                          bottomRight: Radius.circular(0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 100),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SignUpScreen(),
+                              ),
+                            ),
+                            child: Text('Sign Up?',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.openSans(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              ),
+            )
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }
