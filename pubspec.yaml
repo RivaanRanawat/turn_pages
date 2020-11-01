@@ -73,6 +73,9 @@ flutter:
         - asset: assets/fonts/Lato-Regular.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

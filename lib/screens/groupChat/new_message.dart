@@ -44,6 +44,7 @@ class _NewMessageState extends State<NewMessage> {
       children: [
         Expanded(
           child: Container(
+            margin: EdgeInsets.only(bottom: 7),
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
               color: secondaryColor,

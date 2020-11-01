@@ -1,12 +1,22 @@
-## Getting Started
+#Turn Pages
 
-This project is a starting point for a Flutter application.
+Collection of Book Clubs for students and friends to read books together under a certain period of time
 
-A few resources to get you started if this is your first Flutter project:
+## App Functions
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+* Authentication
+* Creating / Joining Clubs
+* In-Club Group Chat
+* Admin Function(Selecting next book)
+* All Books Read or In Progress
+* Book Reviews
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+![Alt Text](https://github.com/RivaanRanawat/turn-pages/blob/master/screenshots/turn_pages1.jpeg?raw=true)
+![Alt Text](https://github.com/RivaanRanawat/turn-pages/blob/master/screenshots/turn_pages2.jpeg?raw=true)
+![Alt Text](https://github.com/RivaanRanawat/turn-pages/blob/master/screenshots/turn_pages3.jpeg?raw=true)
+![Alt Text](https://github.com/RivaanRanawat/turn-pages/blob/master/screenshots/turn_pages4.jpeg?raw=true)
+![Alt Text](https://github.com/RivaanRanawat/turn-pages/blob/master/screenshots/turn_pages5.jpeg?raw=true)
+![Alt Text](https://github.com/RivaanRanawat/turn-pages/blob/master/screenshots/turn_pages6.jpeg?raw=true)
+
+

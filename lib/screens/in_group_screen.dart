@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:turn_pages/models/groupModel.dart';
 import 'package:turn_pages/models/userModel.dart';
 import 'package:turn_pages/root/root_file.dart';
@@ -32,11 +30,11 @@ class InGroupScreenState extends State<InGroupScreen> {
   void _goToGroupChat(BuildContext context) {
     GroupModel group = Provider.of<GroupModel>(context, listen: false);
     Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => GroupChatScreen(group.id, group.name),
-        ),
-      );
+      context,
+      MaterialPageRoute(
+        builder: (context) => GroupChatScreen(group.id, group.name),
+      ),
+    );
   }
 
   void _signOut(BuildContext context) async {
@@ -95,23 +93,26 @@ class InGroupScreenState extends State<InGroupScreen> {
       body: ListView(
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                 child: IconButton(
                   onPressed: () => _goToGroupChat(context),
                   icon: Icon(
-                    Icons.group,
+                    Icons.chat,
                     color: Colors.white,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(275, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                 child: IconButton(
                   onPressed: () => _signOut(context),
-                  icon: Icon(Icons.exit_to_app),
+                  icon: Icon(
+                    Icons.exit_to_app,
+                    color: Colors.red,
+                  ),
                   color: Theme.of(context).secondaryHeaderColor,
                 ),
               ),
